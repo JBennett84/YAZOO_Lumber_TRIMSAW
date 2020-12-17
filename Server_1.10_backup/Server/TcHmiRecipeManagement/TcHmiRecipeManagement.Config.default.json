@@ -1,0 +1,127 @@
+{
+    "recipeList": {
+        "Test": {
+            "recipeTypeName": "Parameters",
+            "values": {
+                "PLC1.HMI.lrBoardThicknessLimit": 0.0,
+                "PLC1.HMI.lrLaserOffset": [
+                    0,
+                    0
+                ],
+                "PLC1.HMI.lrLaserScaling": [
+                    0,
+                    0
+                ],
+                "PLC1.HMI.rFastSpeed": [
+                    12,
+                    12,
+                    12,
+                    12
+                ],
+                "PLC1.HMI.rSlowSpeed": [
+                    5,
+                    5,
+                    5,
+                    5
+                ]
+            }
+        },
+        "TrimSaw": {
+            "recipeTypeName": "Parameters",
+            "values": {
+                "PLC1.HMI.lrBoardThicknessLimit": 6.0,
+                "PLC1.HMI.lrLaserOffset": [
+                    16.3835,
+                    60.0
+                ],
+                "PLC1.HMI.lrLaserScaling": [
+                    5.4612,
+                    200.0
+                ],
+                "PLC1.HMI.rFastSpeed": [
+                    100.0,
+                    100.0,
+                    100.0,
+                    100.0
+                ],
+                "PLC1.HMI.rSlowSpeed": [
+                    20.0,
+                    20.0,
+                    20.0,
+                    20.0
+                ]
+            }
+        }
+    },
+    "recipeTypeList": {
+        "Parameters": {
+            "members": {
+                "PLC1.HMI.lrBoardThicknessLimit": {
+                    "defaultValue": 0.0,
+                    "enabled": true,
+                    "group": "",
+                    "order": 4,
+                    "schema": {},
+                    "symbol": "PLC1.HMI.lrBoardThicknessLimit",
+                    "unit": ""
+                },
+                "PLC1.HMI.lrLaserOffset": {
+                    "defaultValue": [
+                        0.0,
+                        0.0
+                    ],
+                    "enabled": true,
+                    "group": "",
+                    "order": 2,
+                    "schema": {},
+                    "symbol": "PLC1.HMI.lrLaserOffset",
+                    "unit": ""
+                },
+                "PLC1.HMI.lrLaserScaling": {
+                    "defaultValue": [
+                        0.0,
+                        0.0
+                    ],
+                    "enabled": true,
+                    "group": "",
+                    "order": 3,
+                    "schema": {},
+                    "symbol": "PLC1.HMI.lrLaserScaling",
+                    "unit": ""
+                },
+                "PLC1.HMI.rFastSpeed": {
+                    "defaultValue": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enabled": true,
+                    "group": "",
+                    "order": 0,
+                    "schema": {},
+                    "symbol": "PLC1.HMI.rFastSpeed",
+                    "unit": ""
+                },
+                "PLC1.HMI.rSlowSpeed": {
+                    "defaultValue": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enabled": true,
+                    "group": "",
+                    "order": 1,
+                    "schema": {},
+                    "symbol": "PLC1.HMI.rSlowSpeed",
+                    "unit": ""
+                }
+            },
+            "options": {
+                "enabled": "None"
+            },
+            "recipeTypeNames": []
+        }
+    }
+}
