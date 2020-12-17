@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <GVL Name="Outputs" Id="{18c1f746-0bd4-4614-9991-cb78a1b1835b}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	q_xDeck3Stopper					AT %Q*	: BOOL;
+	q_xDeck4PressureRoller			AT %Q*	: BOOL;
+	q_xDeck4ZeroEndZero				AT %Q*	: BOOL;
+	q_xDeck4ZeroEndMinusOne			AT %Q*	: BOOL;
+	q_xDeck4ZeroEndMinusTwo			AT %Q*	: BOOL;
+	q_xDeck4ZeroEndMotor			AT %Q*	: BOOL;
+	q_xDeck5DropSawZero				AT %Q*	: BOOL;
+	q_xDeck5DropSawTwo				AT %Q*	: BOOL;
+	q_xDeck5DropSawFour				AT %Q*	: BOOL;
+	q_xDeck5DropSawSix				AT %Q*	: BOOL;
+	q_xDeck5DropSawEight			AT %Q*	: BOOL;
+	q_xDeck5DropSawTen				AT %Q*	: BOOL;
+	q_xDeck5DropSawTwelve			AT %Q*	: BOOL;
+	q_xDeck5DropSawFourteen			AT %Q*	: BOOL;
+	q_xDeck5DropSawSixteen			AT %Q*	: BOOL;
+	q_xDeck5DropSawEighteen			AT %Q*	: BOOL;
+	q_xDeck6Tipple					AT %Q*	: BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

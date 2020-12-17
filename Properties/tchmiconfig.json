@@ -1,0 +1,227 @@
+﻿{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.12.742.5/runtimes/native1.12-tchmi/Schema/TchmiConfig.Schema.json",
+  "basePath": "./framework",
+  "scaleMode": "None",
+  "startupView": "Desktop.view",
+  "loginPage": "",
+  "tcHmiServer": {
+    "websocketIntervalTime": 500,
+    "websocketTimeout": 10000,
+    "websocketSystemTimeout": 60000,
+    "websocketSubscriptionMode": "Change"
+  },
+  "activeTheme": "Base",
+  "themes": {
+    "Base": {
+      "resources": [
+        {
+          "name": "Themes/Base/Base.theme",
+          "description": "",
+          "type": "ThemedValues"
+        },
+        {
+          "name": "Themes/Base/Style.css",
+          "description": "",
+          "type": "Stylesheet"
+        },
+        {
+          "name": "Themes/Base/BaseStyle.css",
+          "description": "Theme Stylesheet",
+          "type": "Stylesheet"
+        }
+      ],
+      "replacesThemeForControls": []
+    }
+  },
+  "dependencyFiles": [
+    {
+      "name": "Fonts/Fonts.css",
+      "description": "",
+      "type": "Stylesheet"
+    },
+    {
+      "name": "RecipeFunctions/ConvertDatagridToRecipe.js",
+      "description": "",
+      "type": "JavaScript"
+    },
+    {
+      "name": "RecipeFunctions/ConvertRecipeToDatagrid.js",
+      "description": "",
+      "type": "JavaScript"
+    },
+    {
+      "name": "RecipeFunctions/DeleteRecipe.js",
+      "description": "",
+      "type": "JavaScript"
+    },
+    {
+      "name": "RecipeFunctions/DownloadRecipe.js",
+      "description": "",
+      "type": "JavaScript"
+    },
+    {
+      "name": "RecipeFunctions/ListRecipesAsReferenceArray.js",
+      "description": "",
+      "type": "JavaScript"
+    },
+    {
+      "name": "RecipeFunctions/UpdateDatagridFromTarget.js",
+      "description": "",
+      "type": "JavaScript"
+    },
+    {
+      "name": "RecipeFunctions/UploadRecipe.js",
+      "description": "",
+      "type": "JavaScript"
+    }
+  ],
+  "userControls": [
+    {
+      "url": "User Controls/Outputs.usercontrol"
+    },
+    {
+      "url": "User Controls/VFD_Indicators.usercontrol"
+    }
+  ],
+  "content": [
+    {
+      "url": "Content/Input_Output.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Content/VFD_Status.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Content/Even_End_Buttons.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Content/Live_Data.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Content/NextSetList.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Content/Settings.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Content/Set_Buttons.content",
+      "preload": false,
+      "keepAlive": false
+    }
+  ],
+  "views": [
+    {
+      "url": "Desktop.view",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "I_O.view",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Settings.view",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "VFD_Status.view",
+      "preload": false,
+      "keepAlive": false
+    }
+  ],
+  "userFunctions": [
+    {
+      "url": "RecipeFunctions/UploadRecipe.js"
+    },
+    {
+      "url": "RecipeFunctions/UpdateDatagridFromTarget.js"
+    },
+    {
+      "url": "RecipeFunctions/ListRecipesAsReferenceArray.js"
+    },
+    {
+      "url": "RecipeFunctions/DownloadRecipe.js"
+    },
+    {
+      "url": "RecipeFunctions/DeleteRecipe.js"
+    },
+    {
+      "url": "RecipeFunctions/ConvertRecipeToDatagrid.js"
+    },
+    {
+      "url": "RecipeFunctions/ConvertDatagridToRecipe.js"
+    }
+  ],
+  "symbols": {
+    "internal": {}
+  },
+  "trigger": [],
+  "actionTemplates": [],
+  "languages": {
+    "de-DE": "Localization\\de-DE.localization",
+    "en-US": "Localization\\en-US.localization"
+  },
+  "disableLoadingOptimization": false,
+  "creatorSettings": {
+    "viewport": {
+      "defaultWidth": 1024,
+      "defaultHeight": 768
+    }
+  },
+  "packages": [
+    {
+      "name": "Beckhoff.TwinCAT.HMI.Controls",
+      "basePath": "/Beckhoff.TwinCAT.HMI.Controls"
+    },
+    {
+      "name": "Beckhoff.TwinCAT.HMI.Framework",
+      "basePath": "/framework"
+    },
+    {
+      "name": "Beckhoff.TwinCAT.HMI.Functions",
+      "basePath": "/Beckhoff.TwinCAT.HMI.Functions"
+    }
+  ],
+  "keyboardLayouts": [
+    {
+      "url": "KeyboardLayouts/Calculator.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/German - basic.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/German - compact.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/German - with NumPad.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/Numpad.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/PINpad.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/US - basic.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/US - compact.keyboard.json"
+    },
+    {
+      "url": "KeyboardLayouts/US - with NumPad.keyboard.json"
+    }
+  ]
+}

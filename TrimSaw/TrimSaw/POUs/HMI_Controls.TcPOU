@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="HMI_Controls" Id="{b85ba675-65a1-4267-9c25-44d49605b399}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM HMI_Controls
+VAR
+	
+	xTriggerOneShot : ARRAY [0..9] OF BOOL;
+	xTriggerOneShot_1 : ARRAY [0..2] OF BOOL;
+	xTriggerOneShot_2 : ARRAY [0..2] OF BOOL;
+	xTriggerOneShot_3				: BOOL;
+	x: INT;
+	y: INT;	
+	z: INT;
+	i: INT;
+	h: INT;
+	j: INT;
+	b: INT;
+	c: INT;
+	r_trigger_1: R_Trig;
+	//Remove after demo
+	tDemoTimer: TON;
+	tDemoTimer2: Ton;
+	tDemoTimer3: TON;
+	t : int;
+	
+	
+
+	xIOPage: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR Y := 0 TO 9 DO
+	IF HMI.NextSets[y].stBoardSize = '' THEN
+		EXIT;
+	END_IF
+END_FOR
+
+//Board Size Selection
+FOR x := 0 TO 9 DO
+	IF HMI.xButton_Board_Size_HMI[x] AND NOT xTriggerOneShot[x]THEN
+		IF NOT HMI.xButton_Board_Size_HMI[4] THEN
+			b := 0;
+		END_IF
+		IF NOT HMI.xButton_Board_Size[x] THEN
+			//HMI.xButton_Board_Size[x] := TRUE;
+			xTriggerOneShot[x]:= TRUE;
+			HMI.NextSets[y].stBoardSize := HMI.stButton_Board_Size[x];
+			FOR j := 0 TO 2 DO
+				IF HMI.xButton_Even_End[j] THEN
+					HMI.NextSets[y].stEndEven := HMI.stButton_Even_End_HMI[j];
+				END_IF
+			END_FOR
+			HMI.xButton_Even_End[0] := TRUE;
+			y :=y + 1;
+		ELSIF HMI.xButton_Board_Size[x] THEN
+			HMI.xButton_Board_Size[x] := FALSE;	
+			xTriggerOneShot[x]:= TRUE;
+		END_IF
+	ELSIF NOT HMI.xButton_Board_Size_HMI[x] AND xTriggerOneShot[x]THEN
+		xTriggerOneShot[x]:= FALSE;
+	END_IF
+END_FOR
+
+r_trigger_1 (CLK:= HMI.xButton_Board_Size_HMI[4]);
+IF r_trigger_1.q THEN
+	b := b + 1;
+	IF b >=  3 THEN
+		FOR c := 0 TO 9 DO
+			HMI.NextSets[c].stEndEven := '0';
+		END_FOR
+	END_IF		
+END_IF
+// End Board Size Selection
+
+//Even End Selection
+FOR i := 0 TO 2 DO
+	IF HMI.xButton_Even_End_HMI[i] AND NOT xTriggerOneShot_1[i]THEN
+		IF NOT HMI.xButton_Even_End[i] THEN
+			HMI.xButton_Even_End[i] := TRUE;
+			xTriggerOneShot_1[i] := TRUE;	
+		ELSIF HMI.xButton_Even_End[i] THEN						
+			HMI.xButton_Even_End[i] := FALSE;	
+			xTriggerOneShot_1[i] := TRUE;					
+		END_IF
+	ELSIF NOT HMI.xButton_Even_End_HMI[i] AND xTriggerOneShot_1[i]THEN	
+		xTriggerOneShot_1[i] := FALSE;
+	END_IF
+END_FOR
+
+
+HMI.stButton_Even_End_HMI[0] := '0';
+HMI.stButton_Even_End_HMI[1] := '-1';
+HMI.stButton_Even_End_HMI[2] := '-2';
+
+HMI.stButton_Board_Size[0] := '8';
+HMI.stButton_Board_Size[1] := '10';
+HMI.stButton_Board_Size[2] := '12';
+HMI.stButton_Board_Size[3] := '14'; 
+HMI.stButton_Board_Size[4] := '16';
+HMI.stButton_Board_Size[5] := '18';
+HMI.stButton_Board_Size[6] := 'Trash';
+HMI.stButton_Board_Size[7] := 'Saws Up';
+
+			
+
+
+IF NOT HMI.xButton_Even_End[0] AND NOT HMI.xButton_Even_End[1] AND NOT HMI.xButton_Even_End[2] THEN
+	HMI.xButton_Even_End[0]:= TRUE;
+END_IF
+IF HMI.xButton_Even_End[0] AND NOT xTriggerOneShot_2[0] THEN
+	HMI.xButton_Even_End[1] :=
+	HMI.xButton_Even_End[2] := FALSE;
+	xTriggerOneShot_2[0] := TRUE;
+	xTriggerOneShot_2[1] := 
+	xTriggerOneShot_2[2] := FALSE;
+ELSIF HMI.xButton_Even_End[1] AND NOT xTriggerOneShot_2[1]THEN
+	HMI.xButton_Even_End[0] :=
+	HMI.xButton_Even_End[2] := FALSE;
+	xTriggerOneShot_2[1] := TRUE;
+	xTriggerOneShot_2[0] := 
+	xTriggerOneShot_2[2] := FALSE;
+ELSIF HMI.xButton_Even_End[2] AND NOT xTriggerOneShot_2[2]THEN
+	HMI.xButton_Even_End[0] :=
+	HMI.xButton_Even_End[1] := FALSE;
+	xTriggerOneShot_2[2] := TRUE;
+	xTriggerOneShot_2[0] := 
+	xTriggerOneShot_2[1] := FALSE;
+END_IF		 
+
+		
+IF HMI.xClearSets THEN
+	FOR z := 0 TO 9 DO
+		HMI.NextSets[z].stEndEven := '';
+		HMI.NextSets[z].stBoardSize:= '';
+		HMI.xButton_Board_Size[z] := FALSE;	
+		b := 0;
+	END_FOR
+	FOR h := 0 TO 2 DO
+		HMI.xButton_Even_End[h] := FALSE;	
+	END_FOR
+	y := 0;
+END_IF
+
+HMI.stVFDIndicator[0] :='Ready To Switch ON';
+HMI.stVFDIndicator[1] :='Switched ON';
+HMI.stVFDIndicator[2] :='Operation Enabled';
+HMI.stVFDIndicator[3] :='Fault';
+HMI.stVFDIndicator[4] :='Voltage Enabled';
+HMI.stVFDIndicator[5] :='Quick Stop';
+HMI.stVFDIndicator[6] :='Switch ON Disabled';
+HMI.stVFDIndicator[7] :='Warning';
+HMI.stVFDIndicator[8] :='Target Reached';
+HMI.stVFDIndicator[9] :='INTERNAL LIMIT Active';
+
+//Control buttons logic
+IF HMI.xStartStopButton THEN
+	HMI.stStartStopButton := 'Stop';
+ELSE
+	HMI.stStartStopButton := 'Start';
+END_IF
+
+IF HMI.xSlowFastButton THEN
+	HMI.stSlowFastButton := 'Fast';
+ELSE
+	HMI.stSlowFastButton := 'Slow';
+END_IF
+//End control buttons logic
+
+
+
+
+//Outputs
+
+(*IF xIOPage THEN
+	HMI.xOutputs[0]:=Outputs.q_xDeck3Stopper;
+	HMI.xOutputs[1]:=Outputs.q_xDeck4PressureRoller;
+	HMI.xOutputs[2]:=Outputs.q_xDeck4ZeroEndZero;
+	HMI.xOutputs[3]:=Outputs.q_xDeck4ZeroEndMinusOne;
+	HMI.xOutputs[4]:=Outputs.q_xDeck4ZeroEndMinusTwo;
+	HMI.xOutputs[5]:=Outputs.q_xDeck4ZeroEndMotor;
+	HMI.xOutputs[6]:=Outputs.q_xDeck5DropSawZero;
+	HMI.xOutputs[7]:=Outputs.q_xDeck5DropSawTwo;
+	HMI.xOutputs[8]:=Outputs.q_xDeck5DropSawFour;
+	HMI.xOutputs[9]:=Outputs.q_xDeck5DropSawSix;
+	HMI.xOutputs[10]:=Outputs.q_xDeck5DropSawEight;
+	HMI.xOutputs[11]:=Outputs.q_xDeck5DropSawTen;
+	HMI.xOutputs[12]:=Outputs.q_xDeck5DropSawTwelve;
+	HMI.xOutputs[13]:=Outputs.q_xDeck5DropSawFourteen;
+	HMI.xOutputs[14]:=Outputs.q_xDeck5DropSawSixteen;
+	HMI.xOutputs[15]:=Outputs.q_xDeck5DropSawEighteen;
+	HMI.xOutputs[16]:=Outputs.q_xDeck6Tipple;
+END_IF*)
+
+
+
+HMI.xOutputs[0]:=Outputs.q_xDeck3Stopper;
+HMI.xOutputs[1]:=Outputs.q_xDeck4PressureRoller;
+HMI.xOutputs[2]:=Outputs.q_xDeck4ZeroEndZero;
+HMI.xOutputs[3]:=Outputs.q_xDeck4ZeroEndMinusOne;
+HMI.xOutputs[4]:=Outputs.q_xDeck4ZeroEndMinusTwo;
+HMI.xOutputs[5]:=Outputs.q_xDeck4ZeroEndMotor;
+HMI.xOutputs[6]:=Outputs.q_xDeck5DropSawZero;
+HMI.xOutputs[7]:=Outputs.q_xDeck5DropSawTwo;
+HMI.xOutputs[8]:=Outputs.q_xDeck5DropSawFour;
+HMI.xOutputs[9]:=Outputs.q_xDeck5DropSawSix;
+HMI.xOutputs[10]:=Outputs.q_xDeck5DropSawEight;
+HMI.xOutputs[11]:=Outputs.q_xDeck5DropSawTen;
+HMI.xOutputs[12]:=Outputs.q_xDeck5DropSawTwelve;
+HMI.xOutputs[13]:=Outputs.q_xDeck5DropSawFourteen;
+HMI.xOutputs[14]:=Outputs.q_xDeck5DropSawSixteen;
+HMI.xOutputs[15]:=Outputs.q_xDeck5DropSawEighteen;
+HMI.xOutputs[16]:=Outputs.q_xDeck6Tipple;
+
+
+HMI.stOutputs_Text[0]:='Deck 3 Stopper';
+HMI.stOutputs_Text[1]:='Deck 4 Pressure Roller';
+HMI.stOutputs_Text[2]:='Deck 4 Zero End Zero';
+HMI.stOutputs_Text[3]:='Deck 4 Zero End Minus One';
+HMI.stOutputs_Text[4]:='Deck 4 Zero End Minus Two';
+HMI.stOutputs_Text[5]:='Deck 4 Zero End Motor';
+HMI.stOutputs_Text[6]:='Deck 5 Drop Saw Zero';
+HMI.stOutputs_Text[7]:='Deck 5 Drop Saw Two';
+HMI.stOutputs_Text[8]:='Deck 5 Drop Saw Four';
+HMI.stOutputs_Text[9]:='Deck 5 Drop Saw Six';
+HMI.stOutputs_Text[10]:='Deck 5 Drop Saw Eight';
+HMI.stOutputs_Text[11]:='Deck 5 Drop Saw Ten';
+HMI.stOutputs_Text[12]:='Deck 5 Drop Saw Twelve';
+HMI.stOutputs_Text[13]:='Deck 5 Drop Saw Fourteen';
+HMI.stOutputs_Text[14]:='Deck 5 Drop Saw Sixteen';
+HMI.stOutputs_Text[15]:='Deck 5 Drop Saw Eighteen';
+HMI.stOutputs_Text[16]:='Deck 6 Tipple';
+
+//*******************************Remove After Demo
+(*tDemoTimer(PT := T#2S);
+tDemoTimer3(PT := T#2S);
+IF Trim_Saw_Step.iStep = (0 OR 50) AND HMI.NextSets[0].stBoardSize <> ''THEN
+	tDemoTimer.IN := TRUE;
+END_IF
+
+IF tDemoTimer.Q THEN	
+	IF HMI.rPieceCount < 300 THEN
+		HMI.rPieceCount := HMI.rPieceCount + 1;
+	ELSE
+		HMI.rPieceCount := 0;
+	END_IF
+	IF HMI.lrCurrentThickenss[0] < 6.1 THEN
+		//HMI.lrCurrentThickenss := HMI.lrCurrentThickenss + 1.2;
+	ELSE
+		//HMI.lrCurrentThickenss := 1;
+	END_IF
+	tDemoTimer.IN := FALSE;
+	Inputs.i_xSawEntryPhotoEye := TRUE;
+	tDemoTimer3.IN := TRUE;
+END_IF
+
+IF tDemoTimer3.Q THEN
+	tDemoTimer3.IN := FALSE;
+	Inputs.i_xSawExitPhotoEye := TRUE;
+END_IF
+
+tDemoTimer2(PT := T#2S);
+tDemoTimer2.IN := TRUE;
+IF tDemoTimer2.Q THEN
+	IF t < 10 THEN
+		xInputStatus_HMI_D1[t]:= TRUE;
+		xInputStatus_HMI_D2[t]:= TRUE;
+		xInputStatus_HMI_D3[t]:= TRUE;
+		xInputStatus_HMI_D4[t]:= TRUE;
+		IF t > 0 THEN
+			xInputStatus_HMI_D1[t-1]:= FALSE;
+			xInputStatus_HMI_D2[t-1]:= FALSE;
+			xInputStatus_HMI_D3[t-1]:= FALSE;
+			xInputStatus_HMI_D4[t-1]:= FALSE;
+		END_IF	
+		t := t + 1;
+	ELSE
+		xInputStatus_HMI_D1[9]:= FALSE;
+		xInputStatus_HMI_D2[9]:= FALSE;
+		xInputStatus_HMI_D3[9]:= FALSE;
+		xInputStatus_HMI_D4[9]:= FALSE;
+		t := 0;
+	END_IF
+	tDemoTimer2.IN := FALSE;
+END_IF*)
+
+
+IF Inputs.i_xJoyStickButton1 THEN
+	Inputs.i_xSawEntryPhotoEye := TRUE;
+ELSE
+	Inputs.i_xSawEntryPhotoEye := FALSE;
+END_IF
+
+IF Inputs.i_xJoyStickButton2 THEN
+	Inputs.i_xSawExitPhotoEye := TRUE;
+ELSE
+	Inputs.i_xSawExitPhotoEye := FALSE;
+END_IF
+
+
+
+
+
+
+
+
+
+
+
+//*******************************End Remove After Demo
+]]></ST>
+    </Implementation>
+    <LineIds Name="HMI_Controls">
+      <LineId Id="447" Count="0" />
+      <LineId Id="449" Count="0" />
+      <LineId Id="451" Count="1" />
+      <LineId Id="450" Count="0" />
+      <LineId Id="448" Count="0" />
+      <LineId Id="222" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="383" Count="2" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="605" Count="0" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="199" Count="2" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="354" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="382" Count="0" />
+      <LineId Id="381" Count="0" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="359" Count="1" />
+      <LineId Id="364" Count="2" />
+      <LineId Id="363" Count="0" />
+      <LineId Id="358" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="98" Count="2" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="207" Count="3" />
+      <LineId Id="216" Count="0" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="213" Count="1" />
+      <LineId Id="219" Count="1" />
+      <LineId Id="215" Count="0" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="205" Count="1" />
+      <LineId Id="155" Count="2" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="184" Count="1" />
+      <LineId Id="158" Count="2" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="186" Count="1" />
+      <LineId Id="161" Count="2" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="167" Count="4" />
+      <LineId Id="372" Count="0" />
+      <LineId Id="172" Count="4" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="240" Count="1" />
+      <LineId Id="245" Count="8" />
+      <LineId Id="478" Count="0" />
+      <LineId Id="477" Count="0" />
+      <LineId Id="480" Count="1" />
+      <LineId Id="483" Count="1" />
+      <LineId Id="482" Count="0" />
+      <LineId Id="486" Count="4" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="479" Count="0" />
+      <LineId Id="515" Count="3" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="735" Count="0" />
+      <LineId Id="734" Count="0" />
+      <LineId Id="739" Count="15" />
+      <LineId Id="736" Count="1" />
+      <LineId Id="733" Count="0" />
+      <LineId Id="732" Count="0" />
+      <LineId Id="520" Count="16" />
+      <LineId Id="519" Count="0" />
+      <LineId Id="562" Count="17" />
+      <LineId Id="561" Count="0" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="257" Count="0" />
+      <LineId Id="271" Count="0" />
+      <LineId Id="415" Count="0" />
+      <LineId Id="412" Count="2" />
+      <LineId Id="422" Count="0" />
+      <LineId Id="255" Count="0" />
+      <LineId Id="264" Count="0" />
+      <LineId Id="262" Count="0" />
+      <LineId Id="265" Count="1" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="279" Count="1" />
+      <LineId Id="282" Count="1" />
+      <LineId Id="281" Count="0" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="409" Count="0" />
+      <LineId Id="416" Count="0" />
+      <LineId Id="259" Count="0" />
+      <LineId Id="418" Count="0" />
+      <LineId Id="417" Count="0" />
+      <LineId Id="419" Count="0" />
+      <LineId Id="421" Count="0" />
+      <LineId Id="420" Count="0" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="325" Count="2" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="328" Count="2" />
+      <LineId Id="320" Count="1" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="332" Count="2" />
+      <LineId Id="331" Count="0" />
+      <LineId Id="323" Count="1" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="312" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="685" Count="0" />
+      <LineId Id="691" Count="0" />
+      <LineId Id="705" Count="1" />
+      <LineId Id="692" Count="0" />
+      <LineId Id="703" Count="0" />
+      <LineId Id="693" Count="0" />
+      <LineId Id="699" Count="0" />
+      <LineId Id="701" Count="0" />
+      <LineId Id="704" Count="0" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="285" Count="8" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="239" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

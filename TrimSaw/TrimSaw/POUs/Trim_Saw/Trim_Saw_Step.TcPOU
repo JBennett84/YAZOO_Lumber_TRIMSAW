@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="Trim_Saw_Step" Id="{257f699e-cd97-4287-a9d6-104114e256b5}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Trim_Saw_Step
+VAR
+	iStep						: INT;
+	iCount						: INT;
+	xError						: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF HMI.xStartStopButton THEN
+	CASE iStep OF
+		0: //Stack loaded
+			HMI.stStatusMessage_HMI := 'Waiting for first board in stack to be loaded.';
+			IF HMI.NextSets[0].stBoardSize <> '' THEN
+				iStep := 10;
+			END_IF
+		10: //Set Even Ender Stop
+			HMI.stStatusMessage_HMI := 'Setting even ender position.';
+			IF HMI.NextSets[0].stEndEven = '0' THEN
+				Outputs.q_xDeck4ZeroEndZero := TRUE;
+				Outputs.q_xDeck4ZeroEndMinusOne := FALSE;
+				Outputs.q_xDeck4ZeroEndMinusTwo := FALSE;
+			ELSIF HMI.NextSets[0].stEndEven = '-1' THEN
+				Outputs.q_xDeck4ZeroEndZero := FALSE;
+				Outputs.q_xDeck4ZeroEndMinusOne := TRUE;
+				Outputs.q_xDeck4ZeroEndMinusTwo := FALSE;
+			ELSIF HMI.NextSets[0].stEndEven = '-2' THEN
+				Outputs.q_xDeck4ZeroEndZero := FALSE;
+				Outputs.q_xDeck4ZeroEndMinusOne := FALSE;
+				Outputs.q_xDeck4ZeroEndMinusTwo := TRUE;
+			ELSE
+				//Error
+				HMI.stStatusMessage_HMI := 'Error: Even ender position not possible.';
+				iStep := 99;
+				RETURN;
+			END_IF
+			iStep := 20;
+		20: //Lower even ender pressure roller and turn on even ender motor
+			HMI.stStatusMessage_HMI := 'Lowering even ender pressure roller and turning on even ender motor.';
+			Outputs.q_xDeck4PressureRoller := TRUE;
+			Outputs.q_xDeck4ZeroEndMotor := TRUE;
+			iStep := 30;
+		30: //Thickness okay
+			HMI.stStatusMessage_HMI := 'Checking board thickness.';
+			IF Trim_Saw_Pre.lrBoardThickness[0] >= HMI.lrBoardThicknessLimit THEN
+				HMI.NextSets[0].stBoardSize := 'Saws Up';
+				//Set tipple
+				//Clear stack for this board?				
+			END_IF
+			iStep := 40;
+		40: //Lower appropriate saws
+			HMI.stStatusMessage_HMI := 'Lowering appropriate saws.';
+			IF HMI.NextSets[0].stBoardSize <> 'Trash' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := TRUE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := TRUE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := TRUE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := TRUE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> 'Saws Up' THEN
+				Outputs.q_xDeck5DropSawZero := FALSE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '2' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := TRUE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '4' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := TRUE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '6' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := TRUE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '8' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := TRUE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '10' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := TRUE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '12' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := TRUE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '14' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := TRUE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '16' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := TRUE;
+				Outputs.q_xDeck5DropSawEighteen := FALSE;
+			ELSIF HMI.NextSets[0].stBoardSize <> '18' THEN
+				Outputs.q_xDeck5DropSawZero := TRUE;
+				Outputs.q_xDeck5DropSawTwo := FALSE;
+				Outputs.q_xDeck5DropSawFour := FALSE;
+				Outputs.q_xDeck5DropSawSix := FALSE;
+				Outputs.q_xDeck5DropSawEight := FALSE;
+				Outputs.q_xDeck5DropSawTen := FALSE;
+				Outputs.q_xDeck5DropSawTwelve := FALSE;
+				Outputs.q_xDeck5DropSawFourteen := FALSE;
+				Outputs.q_xDeck5DropSawSixteen := FALSE;
+				Outputs.q_xDeck5DropSawEighteen := TRUE;
+			ELSE
+				//Error
+				HMI.stStatusMessage_HMI := 'Error: Saw position not possible.';
+				RETURN;
+			END_IF
+			iStep := 50;
+		50: //Wait for entry photoeye
+			HMI.stStatusMessage_HMI := 'Waiting for board to enter saw.';
+			IF Trim_Saw_Pre.tonSawEntryPhotoEye.Q THEN
+				iStep := 60;
+			END_IF
+		60: //Wait for board to exit saws
+			HMI.stStatusMessage_HMI := 'Waiting for board to exit saw.';
+			IF Inputs.i_xSawExitPhotoEye THEN
+				FOR iCount := 0 TO 9 BY 1 DO
+					IF iCount = 9 THEN
+						HMI.NextSets[iCount].stBoardSize := '';
+						HMI.NextSets[iCount].stEndEven := '';
+					ELSE
+						HMI.NextSets[iCount].stBoardSize := HMI.NextSets[iCount + 1].stBoardSize;
+						HMI.NextSets[iCount].stEndEven := HMI.NextSets[iCount + 1].stEndEven;
+					END_IF
+				END_FOR
+				iStep := 0;
+			END_IF
+		99: //Error
+			
+	END_CASE
+ELSE
+	Outputs.q_xDeck5DropSawZero := FALSE;
+	Outputs.q_xDeck5DropSawTwo := FALSE;
+	Outputs.q_xDeck5DropSawFour := FALSE;
+	Outputs.q_xDeck5DropSawSix := FALSE;
+	Outputs.q_xDeck5DropSawEight := FALSE;
+	Outputs.q_xDeck5DropSawTen := FALSE;
+	Outputs.q_xDeck5DropSawTwelve := FALSE;
+	Outputs.q_xDeck5DropSawFourteen := FALSE;
+	Outputs.q_xDeck5DropSawSixteen := FALSE;
+	Outputs.q_xDeck5DropSawEighteen := FALSE;
+	IF NOT xError THEN
+		HMI.stStatusMessage_HMI := 'Waiting for start button to be pressed.';
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="Trim_Saw_Step">
+      <LineId Id="207" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="258" Count="0" />
+      <LineId Id="224" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="259" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="40" Count="2" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="257" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="260" Count="0" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="264" Count="1" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="263" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="262" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="85" Count="4" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="90" Count="8" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="100" Count="8" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="109" Count="8" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="118" Count="8" />
+      <LineId Id="69" Count="1" />
+      <LineId Id="127" Count="8" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="136" Count="8" />
+      <LineId Id="73" Count="1" />
+      <LineId Id="145" Count="8" />
+      <LineId Id="75" Count="1" />
+      <LineId Id="154" Count="8" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="163" Count="8" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="172" Count="8" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="181" Count="1" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="253" Count="3" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="266" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="277" Count="1" />
+      <LineId Id="283" Count="0" />
+      <LineId Id="280" Count="2" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="220" Count="0" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="209" Count="0" />
+      <LineId Id="211" Count="8" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="268" Count="2" />
+      <LineId Id="208" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="ST_Set" Id="{bfb0d672-f78e-47d9-83e1-5833fc7e4653}">
+    <Declaration><![CDATA[TYPE ST_Set :
+STRUCT
+stBoardSize : STRING;
+stEndEven : STRING;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

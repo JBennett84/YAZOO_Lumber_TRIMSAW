@@ -1,0 +1,330 @@
+﻿<div id="VFD_Status_1" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="100" data-tchmi-height="100" data-tchmi-width-unit="%" data-tchmi-height-unit="%">
+
+<div id="VFD_Indicators_2" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="80" data-tchmi-height-unit="%" data-tchmi-left="0" data-tchmi-left-unit="%" data-tchmi-target-user-control="User Controls/VFD_Indicators.usercontrol" data-tchmi-top="10" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-text1="%s%PLC1.HMI.stVFDIndicator[0]%/s%" data-tchmi-text2="%s%PLC1.HMI.stVFDIndicator[1]%/s%" data-tchmi-text3="%s%PLC1.HMI.stVFDIndicator[2]%/s%" data-tchmi-text4="%s%PLC1.HMI.stVFDIndicator[3]%/s%" data-tchmi-text5="%s%PLC1.HMI.stVFDIndicator[4]%/s%" data-tchmi-text6="%s%PLC1.HMI.stVFDIndicator[5]%/s%" data-tchmi-text7="%s%PLC1.HMI.stVFDIndicator[6]%/s%" data-tchmi-text8="%s%PLC1.HMI.stVFDIndicator[7]%/s%" data-tchmi-text9="%s%PLC1.HMI.stVFDIndicator[8]%/s%" data-tchmi-text10="%s%PLC1.HMI.stVFDIndicator[9]%/s%" data-tchmi-active_1="%s%PLC1.Deck1.xInputStatus_HMI_D1[0]%/s%" data-tchmi-active_2="%s%PLC1.Deck1.xInputStatus_HMI_D1[1]%/s%" data-tchmi-active_3="%s%PLC1.Deck1.xInputStatus_HMI_D1[2]%/s%" data-tchmi-active_4="%s%PLC1.Deck1.xInputStatus_HMI_D1[3]%/s%" data-tchmi-active_5="%s%PLC1.Deck1.xInputStatus_HMI_D1[4]%/s%" data-tchmi-active_6="%s%PLC1.Deck1.xInputStatus_HMI_D1[5]%/s%" data-tchmi-active_7="%s%PLC1.Deck1.xInputStatus_HMI_D1[6]%/s%" data-tchmi-active_8="%s%PLC1.Deck1.xInputStatus_HMI_D1[7]%/s%" data-tchmi-active_9="%s%PLC1.Deck1.xInputStatus_HMI_D1[8]%/s%" data-tchmi-active_10="%s%PLC1.Deck1.xInputStatus_HMI_D1[9]%/s%">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-activecolor" type="application/json">
+{
+  "color": "rgba(0, 0, 255, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="VFD_Indicators_3" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="80" data-tchmi-height-unit="%" data-tchmi-left="25" data-tchmi-left-unit="%" data-tchmi-target-user-control="User Controls/VFD_Indicators.usercontrol" data-tchmi-top="10" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-text1="%s%PLC1.HMI.stVFDIndicator[0]%/s%" data-tchmi-text2="%s%PLC1.HMI.stVFDIndicator[1]%/s%" data-tchmi-text3="%s%PLC1.HMI.stVFDIndicator[2]%/s%" data-tchmi-text4="%s%PLC1.HMI.stVFDIndicator[3]%/s%" data-tchmi-text5="%s%PLC1.HMI.stVFDIndicator[4]%/s%" data-tchmi-text6="%s%PLC1.HMI.stVFDIndicator[5]%/s%" data-tchmi-text7="%s%PLC1.HMI.stVFDIndicator[6]%/s%" data-tchmi-text8="%s%PLC1.HMI.stVFDIndicator[7]%/s%" data-tchmi-text9="%s%PLC1.HMI.stVFDIndicator[8]%/s%" data-tchmi-text10="%s%PLC1.HMI.stVFDIndicator[9]%/s%" data-tchmi-active_1="%s%PLC1.Deck2.xInputStatus_HMI_D2[0]%/s%" data-tchmi-active_2="%s%PLC1.Deck2.xInputStatus_HMI_D2[1]%/s%" data-tchmi-active_3="%s%PLC1.Deck2.xInputStatus_HMI_D2[2]%/s%" data-tchmi-active_4="%s%PLC1.Deck2.xInputStatus_HMI_D2[3]%/s%" data-tchmi-active_5="%s%PLC1.Deck2.xInputStatus_HMI_D2[4]%/s%" data-tchmi-active_6="%s%PLC1.Deck2.xInputStatus_HMI_D2[5]%/s%" data-tchmi-active_7="%s%PLC1.Deck2.xInputStatus_HMI_D2[6]%/s%" data-tchmi-active_8="%s%PLC1.Deck2.xInputStatus_HMI_D2[7]%/s%" data-tchmi-active_9="%s%PLC1.Deck2.xInputStatus_HMI_D2[8]%/s%" data-tchmi-active_10="%s%PLC1.Deck2.xInputStatus_HMI_D2[9]%/s%">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-activecolor" type="application/json">
+{
+  "color": "rgba(0, 0, 255, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="VFD_Indicators_4" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="80" data-tchmi-height-unit="%" data-tchmi-left="50" data-tchmi-left-unit="%" data-tchmi-target-user-control="User Controls/VFD_Indicators.usercontrol" data-tchmi-top="10" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-text1="%s%PLC1.HMI.stVFDIndicator[0]%/s%" data-tchmi-text2="%s%PLC1.HMI.stVFDIndicator[1]%/s%" data-tchmi-text3="%s%PLC1.HMI.stVFDIndicator[2]%/s%" data-tchmi-text4="%s%PLC1.HMI.stVFDIndicator[3]%/s%" data-tchmi-text5="%s%PLC1.HMI.stVFDIndicator[4]%/s%" data-tchmi-text6="%s%PLC1.HMI.stVFDIndicator[5]%/s%" data-tchmi-text7="%s%PLC1.HMI.stVFDIndicator[6]%/s%" data-tchmi-text8="%s%PLC1.HMI.stVFDIndicator[7]%/s%" data-tchmi-text9="%s%PLC1.HMI.stVFDIndicator[8]%/s%" data-tchmi-text10="%s%PLC1.HMI.stVFDIndicator[9]%/s%" data-tchmi-active_1="%s%PLC1.Deck3.xInputStatus_HMI_D3[0]%/s%" data-tchmi-active_2="%s%PLC1.Deck3.xInputStatus_HMI_D3[1]%/s%" data-tchmi-active_3="%s%PLC1.Deck3.xInputStatus_HMI_D3[2]%/s%" data-tchmi-active_4="%s%PLC1.Deck3.xInputStatus_HMI_D3[3]%/s%" data-tchmi-active_5="%s%PLC1.Deck3.xInputStatus_HMI_D3[4]%/s%" data-tchmi-active_6="%s%PLC1.Deck3.xInputStatus_HMI_D3[5]%/s%" data-tchmi-active_7="%s%PLC1.Deck3.xInputStatus_HMI_D3[6]%/s%" data-tchmi-active_8="%s%PLC1.Deck3.xInputStatus_HMI_D3[7]%/s%" data-tchmi-active_9="%s%PLC1.Deck3.xInputStatus_HMI_D3[8]%/s%" data-tchmi-active_10="%s%PLC1.Deck3.xInputStatus_HMI_D3[9]%/s%">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-activecolor" type="application/json">
+{
+  "color": "rgba(0, 0, 255, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="VFD_Indicators_5" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="80" data-tchmi-height-unit="%" data-tchmi-left="75" data-tchmi-left-unit="%" data-tchmi-target-user-control="User Controls/VFD_Indicators.usercontrol" data-tchmi-top="10" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-text1="%s%PLC1.HMI.stVFDIndicator[0]%/s%" data-tchmi-text2="%s%PLC1.HMI.stVFDIndicator[1]%/s%" data-tchmi-text3="%s%PLC1.HMI.stVFDIndicator[2]%/s%" data-tchmi-text4="%s%PLC1.HMI.stVFDIndicator[3]%/s%" data-tchmi-text5="%s%PLC1.HMI.stVFDIndicator[4]%/s%" data-tchmi-text6="%s%PLC1.HMI.stVFDIndicator[5]%/s%" data-tchmi-text7="%s%PLC1.HMI.stVFDIndicator[6]%/s%" data-tchmi-text8="%s%PLC1.HMI.stVFDIndicator[7]%/s%" data-tchmi-text9="%s%PLC1.HMI.stVFDIndicator[8]%/s%" data-tchmi-text10="%s%PLC1.HMI.stVFDIndicator[9]%/s%" data-tchmi-active_1="%s%PLC1.Deck4.xInputStatus_HMI_D4[0]%/s%" data-tchmi-active_2="%s%PLC1.Deck4.xInputStatus_HMI_D4[1]%/s%" data-tchmi-active_3="%s%PLC1.Deck4.xInputStatus_HMI_D4[2]%/s%" data-tchmi-active_4="%s%PLC1.Deck4.xInputStatus_HMI_D4[3]%/s%" data-tchmi-active_5="%s%PLC1.Deck4.xInputStatus_HMI_D4[4]%/s%" data-tchmi-active_6="%s%PLC1.Deck4.xInputStatus_HMI_D4[5]%/s%" data-tchmi-active_7="%s%PLC1.Deck4.xInputStatus_HMI_D4[6]%/s%" data-tchmi-active_8="%s%PLC1.Deck4.xInputStatus_HMI_D4[7]%/s%" data-tchmi-active_9="%s%PLC1.Deck4.xInputStatus_HMI_D4[8]%/s%" data-tchmi-active_10="%s%PLC1.Deck4.xInputStatus_HMI_D4[9]%/s%">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-activecolor" type="application/json">
+{
+  "color": "rgba(0, 0, 255, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="TcHmiTextblock_11" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left="0" data-tchmi-left-unit="%" data-tchmi-text="Deck 1 VFD" data-tchmi-top="0" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-text-font-size="200" data-tchmi-text-font-size-unit="%" data-tchmi-text-font-weight="Bold">
+
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="TcHmiTextblock_12" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left="25.0" data-tchmi-left-unit="%" data-tchmi-text="Deck 2 VFD" data-tchmi-top="0.0" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-text-font-size="200" data-tchmi-text-font-size-unit="%" data-tchmi-text-font-weight="Bold">
+
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="TcHmiTextblock_13" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left="50.0" data-tchmi-left-unit="%" data-tchmi-text="Deck 3 VFD" data-tchmi-top="0.0" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-text-font-size="200" data-tchmi-text-font-size-unit="%" data-tchmi-text-font-weight="Bold">
+
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="TcHmiTextblock_14" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left="75.0" data-tchmi-left-unit="%" data-tchmi-text="Deck 4 VFD" data-tchmi-top="0.0" data-tchmi-top-unit="%" data-tchmi-width="25" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-text-font-size="200" data-tchmi-text-font-size-unit="%" data-tchmi-text-font-weight="Bold">
+
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="TcHmiButton_26" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="Main" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-bottom="0.0" data-tchmi-right="0.0" data-tchmi-bottom-unit="%" data-tchmi-right-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="250" data-tchmi-text-font-size-unit="%">
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "TcHmiButton_13.onPressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%MainContentRegion::TargetContent%/ctrl%",
+        "valueType": "tchmi:framework#/definitions/ContentPath",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:framework#/definitions/ContentPath",
+          "value": "Content/Settings.content"
+        },
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "TcHmiButton_26.onPressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "var v1 = TcHmi.View.get();\nTcHmi.Log.debug(v1.getId());\nTcHmi.View.load('Desktop.view', function (data) {\n    var v2 = TcHmi.View.get();\n    TcHmi.Log.debug(v2.getId());\n});"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]</script>
+</div>
+
+<div id="TcHmiButton_28" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="Settings" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-bottom="0.0" data-tchmi-right="12.5" data-tchmi-bottom-unit="%" data-tchmi-right-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="250" data-tchmi-text-font-size-unit="%">
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "TcHmiButton_28.onPressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "var v1 = TcHmi.View.get();\nTcHmi.Log.debug(v1.getId());\nTcHmi.View.load('Settings.view', function (data) {\n    var v2 = TcHmi.View.get();\n    TcHmi.Log.debug(v2.getId());\n});"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]</script>
+
+<script data-tchmi-target-attribute="data-tchmi-virtual-control-right-mappings" type="application/json">
+[]
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-access-config" type="application/json">
+[
+  {
+    "accessright": "operate",
+    "group": "Operator",
+    "permission": "Deny"
+  }
+]
+</script>
+</div>
+
+</div>

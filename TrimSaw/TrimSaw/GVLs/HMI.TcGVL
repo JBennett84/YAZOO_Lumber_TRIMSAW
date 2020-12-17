@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <GVL Name="HMI" Id="{1f5a6394-c4dc-4c25-841b-64f9cb1e12ee}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+lrVFD_Set_Velocity 			: ARRAY [0..3] OF LREAL;
+lrVFD_Actual_Velocity 		: ARRAY [0..3] OF LREAL;
+
+xButton_Board_Size 			: ARRAY [0..9] OF BOOL;
+xButton_Board_Size_HMI 		: ARRAY [0..9] OF BOOL;
+stButton_Board_Size 		: ARRAY [0..9] OF STRING;
+
+xButton_Even_End 			: ARRAY [0..2] OF BOOL;
+xButton_Even_End_HMI 		: ARRAY [0..2] OF BOOL;
+stButton_Even_End_HMI 		: ARRAY [0..2] OF STRING;
+
+NextSets 					: ARRAY[0..9] OF ST_Set;
+lrCurrentThickenss 			: ARRAY[0..1] OF LREAL;
+rPieceCount 				: REAL;
+xClearSets 					: BOOL;
+
+stVFDIndicator				: ARRAY[0..9] OF STRING;
+
+stStatusMessage_HMI			: STRING;
+
+xStartStopButton			: BOOL;
+stStartStopButton			: STRING;
+
+xSlowFastButton				: BOOL;
+stSlowFastButton			: STRING;
+
+xResetButton				: BOOL;
+
+
+//Recipe parameters
+rSlowSpeed					: ARRAY [0..3] OF REAL;
+rFastSpeed					: ARRAY [0..3] OF REAL;
+lrLaserScaling				: ARRAY[0..1] OF LREAL;
+lrLaserOffset				: ARRAY[0..1] OF LREAL;
+lrBoardThicknessLimit		: LREAL;
+//End Recipe Parameters
+
+//VFD Jog buttons 
+xJogForward_HMI					: ARRAY [0..3] OF BOOL;
+xJogReverse_HMI					: ARRAY [0..3] OF BOOL;
+
+//Outputs 
+stOutputs_Text					: ARRAY [0..17] OF STRING;
+xOutputs						: ARRAY [0..17] OF BOOL;
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

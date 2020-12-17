@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MAIN" Id="{2e82b33a-54ca-422d-9510-e50a31ff284c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	arr_FaultCodes					: ARRAY [0..110] OF STRING; 
+	lrSpeed_HMI_D1					: LREAL;
+	
+	stRecipeName					: STRING;
+	
+	
+	//Remove after demo
+	fb_DRAND						: Drand;
+	fb_DRAND2						: Drand;
+	fb_DRAND3						: Drand;
+	fb_DRAND4						: Drand;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[HMI_Controls();
+Trim_Saw_Pre();
+Trim_Saw_Step();
+Deck_1();
+Deck_2();
+Deck_3();
+Deck_4();
+FaultCodes();
+
+stRecipeName := 'TrimSaw';]]></ST>
+    </Implementation>
+    <Action Name="Deck_1" Id="{6ba69eb0-4eaf-40c8-94ac-46c97011a412}">
+      <Implementation>
+        <ST><![CDATA[//Inputs from VFD
+(*xInputStatus_HMI_D1[0] := xReady_To_Switch_on_D1 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.0); 
+xInputStatus_HMI_D1[1] := xSwitched_ON_D1:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.1); 
+xInputStatus_HMI_D1[2] := xOperationEnabled_D1 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.2); 
+xInputStatus_HMI_D1[3] := xFault_D1 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.3); 
+xInputStatus_HMI_D1[4] := xVoltageEnabled_D1 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.4); 
+xInputStatus_HMI_D1[5] := xQuickStop_D1:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.5); 
+xInputStatus_HMI_D1[6] := xSwitchOnDisabled_D1 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.6); 
+xInputStatus_HMI_D1[7] := xWarning_D1:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.7); 
+xInputStatus_HMI_D1[8] := xTargetReached_D1:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.10); 
+xInputStatus_HMI_D1[9] := xInternalLimitActive_D1:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.11); *)
+xDirectionofRotation_D1:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D1.15);
+rTorqueValue_D1 := iTorqueRaw_D1/10.0;
+rCurrentValue_D1 := uiCurrentRaw_D1/10.0;
+stFault_D1 := arr_FaultCodes[uiFaultCode_D1];
+
+//Actual Speed
+//HMI.lrVFD_Actual_Velocity[0] := iVelocityRaw_D1;	**********Remove comment after demo	
+
+//************************************************************Remove After Demo
+fb_DRAND(Seed:= 10, Num=>HMI.lrVFD_Actual_Velocity[0]);
+HMI.lrVFD_Actual_Velocity[0] := HMI.lrVFD_Actual_Velocity[0] + 100;
+IF HMI.lrVFD_Actual_Velocity[0] > 101 THEN
+	HMI.lrVFD_Actual_Velocity[0] := 0;
+END_IF
+//************************************************************End Remove After Demo
+
+//Speed
+ATV_RPDO_Output2_Target_Velocity_D1 := LREAL_TO_WORD (lrSpeed_D1);
+
+//Direction
+IF xForward_D1 THEN
+	iDirection_D1 := 0;	
+	xReverse_D1 := FALSE;
+ELSIF xReverse_D1 THEN
+	iDirection_D1 := 1;
+	xForward_D1 := FALSE;
+END_IF
+
+//Enable Control Word
+IF xEnable_D1 AND NOT xStart_D1 THEN
+	ATV_RPDO_Output1_Control_Word_D1.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D1.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D1.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D1.3 := 0;//Enable Operation
+	ATV_RPDO_Output1_Control_Word_D1.11 := INT_TO_BIT (iDirection_D1);//Direction
+END_IF
+
+//Start Control Word
+IF xEnable_D1 AND xStart_D1 THEN
+	ATV_RPDO_Output1_Control_Word_D1.0 := 1;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D1.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D1.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D1.3 := 1;//Enable Operation
+END_IF
+
+//Stop Control Word
+IF xEnable_D1 AND xStop_D1 THEN
+	xStart_D1 := FALSE;
+	ATV_RPDO_Output1_Control_Word_D1.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D1.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D1.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D1.3 := 0;//Enable Operation
+END_IF
+
+//Reset Control Word
+IF xReset_D1 THEN
+	ATV_RPDO_Output1_Control_Word_D1.7 := 1;//Reset Fault
+ELSE 
+	ATV_RPDO_Output1_Control_Word_D1.7 := 0;//Reset Fault
+END_IF
+
+//Reset if not enabled
+IF NOT xEnable_D1 THEN
+	ATV_RPDO_Output1_Control_Word_D1.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D1.1 := 0;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D1.2 := 0;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D1.3 := 0;//Enable Operation
+	xStart_D1 := FALSE;
+	xStop_D1 := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Deck_2" Id="{97d8aeb5-fea3-4c27-9d39-e1fbd341fb2b}">
+      <Implementation>
+        <ST><![CDATA[//Inputs from VFD
+(*xInputStatus_HMI_D2[0] := xReady_To_Switch_on_D2 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.0); 
+xInputStatus_HMI_D2[1] := xSwitched_ON_D2:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.1); 
+xInputStatus_HMI_D2[2] := xOperationEnabled_D2 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.2); 
+xInputStatus_HMI_D2[3] := xFault_D2 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.3); 
+xInputStatus_HMI_D2[4] := xVoltageEnabled_D2 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.4); 
+xInputStatus_HMI_D2[5] := xQuickStop_D2:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.5); 
+xInputStatus_HMI_D2[6] := xSwitchOnDisabled_D2 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.6); 
+xInputStatus_HMI_D2[7] := xWarning_D2:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.7); 
+xInputStatus_HMI_D2[8] := xTargetReached_D2:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.10); 
+xInputStatus_HMI_D2[9] := xInternalLimitActive_D2:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.11); *)
+xDirectionofRotation_D2:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D2.15);
+rTorqueValue_D2 := iTorqueRaw_D2/10.0;
+rCurrentValue_D2 := uiCurrentRaw_D2/10.0;
+stFault_D2 := arr_FaultCodes[uiFaultCode_D2];
+
+//Actual Speed
+//HMI.lrVFD_Actual_Velocity[1] := iVelocityRaw_D2;	**********Remove comment after demo
+
+//************************************************************Remove After Demo
+fb_DRAND2(Seed:= 4, Num=>HMI.lrVFD_Actual_Velocity[1]);
+HMI.lrVFD_Actual_Velocity[1] := HMI.lrVFD_Actual_Velocity[1] + 100;
+IF HMI.lrVFD_Actual_Velocity[1] > 101 THEN
+	HMI.lrVFD_Actual_Velocity[1] := 0;
+END_IF
+//************************************************************End Remove After Demo
+
+//Speed
+ATV_RPDO_Output2_Target_Velocity_D2 := LREAL_TO_WORD (lrSpeed_D2);
+
+//Direction
+IF xForward_D2 THEN
+	iDirection_D2 := 0;	
+	xReverse_D2 := FALSE;
+ELSIF xReverse_D2 THEN
+	iDirection_D2 := 1;
+	xForward_D2 := FALSE;
+END_IF
+
+//Enable Control Word
+IF xEnable_D2 AND NOT xStart_D2 THEN
+	ATV_RPDO_Output1_Control_Word_D2.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D2.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D2.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D2.3 := 0;//Enable Operation
+	ATV_RPDO_Output1_Control_Word_D2.11 := INT_TO_BIT (iDirection_D2);//Direction
+END_IF
+
+//Start Control Word
+IF xEnable_D2 AND xStart_D2 THEN
+	ATV_RPDO_Output1_Control_Word_D2.0 := 1;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D2.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D2.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D2.3 := 1;//Enable Operation
+END_IF
+
+//Stop Control Word
+IF xEnable_D2 AND xStop_D2 THEN
+	xStart_D2 := FALSE;
+	ATV_RPDO_Output1_Control_Word_D2.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D2.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D2.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D2.3 := 0;//Enable Operation
+END_IF
+
+//Reset Control Word
+IF xReset_D2 THEN
+	ATV_RPDO_Output1_Control_Word_D2.7 := 1;//Reset Fault
+ELSE 
+	ATV_RPDO_Output1_Control_Word_D2.7 := 0;//Reset Fault
+END_IF
+
+//Reset if not enabled
+IF NOT xEnable_D2 THEN
+	ATV_RPDO_Output1_Control_Word_D2.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D2.1 := 0;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D2.2 := 0;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D2.3 := 0;//Enable Operation
+	xStart_D2 := FALSE;
+	xStop_D2 := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Deck_3" Id="{74d4cbf9-61ec-4fd0-b98f-b8f66f586b8f}">
+      <Implementation>
+        <ST><![CDATA[//Inputs from VFD
+(*xInputStatus_HMI_D3[0] := xReady_To_Switch_on_D3 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.0); 
+xInputStatus_HMI_D3[1] := xSwitched_ON_D3:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.1); 
+xInputStatus_HMI_D3[2] := xOperationEnabled_D3 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.2); 
+xInputStatus_HMI_D3[3] := xFault_D3 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.3); 
+xInputStatus_HMI_D3[4] := xVoltageEnabled_D3 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.4); 
+xInputStatus_HMI_D3[5] := xQuickStop_D3:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.5); 
+xInputStatus_HMI_D3[6] := xSwitchOnDisabled_D3 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.6); 
+xInputStatus_HMI_D3[7] := xWarning_D3:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.7); 
+xInputStatus_HMI_D3[8] := xTargetReached_D3:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.10); 
+xInputStatus_HMI_D3[9] := xInternalLimitActive_D3:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.11); *)
+xDirectionofRotation_D3:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D3.15);
+rTorqueValue_D3 := iTorqueRaw_D3/10.0;
+rCurrentValue_D3 := uiCurrentRaw_D3/10.0;
+stFault_D3 := arr_FaultCodes[uiFaultCode_D3];
+
+//Actual Speed
+//HMI.lrVFD_Actual_Velocity[2] := iVelocityRaw_D3;	**********Remove comment after demo	
+
+//************************************************************Remove After Demo
+fb_DRAND3(Seed:= 3, Num=>HMI.lrVFD_Actual_Velocity[2]);
+HMI.lrVFD_Actual_Velocity[2] := HMI.lrVFD_Actual_Velocity[2] + 100;
+IF HMI.lrVFD_Actual_Velocity[2] > 101 THEN
+	HMI.lrVFD_Actual_Velocity[2] := 0;
+END_IF
+//************************************************************End Remove After Demo
+
+//Speed
+ATV_RPDO_Output2_Target_Velocity_D3 := LREAL_TO_WORD (lrSpeed_D3);
+
+//Direction
+IF xForward_D3 THEN
+	iDirection_D3 := 0;	
+	xReverse_D3 := FALSE;
+ELSIF xReverse_D3 THEN
+	iDirection_D3 := 1;
+	xForward_D3 := FALSE;
+END_IF
+
+//Enable Control Word
+IF xEnable_D3 AND NOT xStart_D3 THEN
+	ATV_RPDO_Output1_Control_Word_D3.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D3.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D3.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D3.3 := 0;//Enable Operation
+	ATV_RPDO_Output1_Control_Word_D3.11 := INT_TO_BIT (iDirection_D3);//Direction
+END_IF
+
+//Start Control Word
+IF xEnable_D3 AND xStart_D3 THEN
+	ATV_RPDO_Output1_Control_Word_D3.0 := 1;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D3.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D3.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D3.3 := 1;//Enable Operation
+END_IF
+
+//Stop Control Word
+IF xEnable_D3 AND xStop_D3 THEN
+	xStart_D3 := FALSE;
+	ATV_RPDO_Output1_Control_Word_D3.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D3.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D3.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D3.3 := 0;//Enable Operation
+END_IF
+
+//Reset Control Word
+IF xReset_D3 THEN
+	ATV_RPDO_Output1_Control_Word_D3.7 := 1;//Reset Fault
+ELSE 
+	ATV_RPDO_Output1_Control_Word_D3.7 := 0;//Reset Fault
+END_IF
+
+//Reset if not enabled
+IF NOT xEnable_D3 THEN
+	ATV_RPDO_Output1_Control_Word_D3.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D3.1 := 0;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D3.2 := 0;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D3.3 := 0;//Enable Operation
+	xStart_D3 := FALSE;
+	xStop_D3 := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Deck_4" Id="{b6899649-432b-4b69-8742-62d2329c4ae7}">
+      <Implementation>
+        <ST><![CDATA[//Inputs from VFD
+(*xInputStatus_HMI_D4[0] := xReady_To_Switch_on_D4 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.0); 
+xInputStatus_HMI_D4[1] := xSwitched_ON_D4:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.1); 
+xInputStatus_HMI_D4[2] := xOperationEnabled_D4 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.2); 
+xInputStatus_HMI_D4[3] := xFault_D4 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.3); 
+xInputStatus_HMI_D4[4] := xVoltageEnabled_D4 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.4); 
+xInputStatus_HMI_D4[5] := xQuickStop_D4:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.5); 
+xInputStatus_HMI_D4[6] := xSwitchOnDisabled_D4 := BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.6); 
+xInputStatus_HMI_D4[7] := xWarning_D4:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.7); 
+xInputStatus_HMI_D4[8] := xTargetReached_D4:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.10); 
+xInputStatus_HMI_D4[9] := xInternalLimitActive_D4:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.11); *)
+xDirectionofRotation_D4:= BIT_TO_BOOL (ATV_TPDO_Input1_Status_Word_D4.15);
+rTorqueValue_D4 := iTorqueRaw_D4/10.0;
+rCurrentValue_D4 := uiCurrentRaw_D4/10.0;
+stFault_D4 := arr_FaultCodes[uiFaultCode_D4];
+
+//Actual Speed
+//HMI.lrVFD_Actual_Velocity[3] := iVelocityRaw_D4;	**********Remove comment after demo
+
+//************************************************************Remove After Demo
+fb_DRAND4(Seed:= 2, Num=>HMI.lrVFD_Actual_Velocity[3]);
+HMI.lrVFD_Actual_Velocity[3] := HMI.lrVFD_Actual_Velocity[3] + 100;
+IF HMI.lrVFD_Actual_Velocity[3] > 101 THEN
+	HMI.lrVFD_Actual_Velocity[3] := 0;
+END_IF
+//************************************************************End Remove After Demo
+
+//Speed
+ATV_RPDO_Output2_Target_Velocity_D4 := LREAL_TO_WORD (lrSpeed_D4);
+
+//Direction
+IF xForward_D4 THEN
+	iDirection_D4 := 0;	
+	xReverse_D4 := FALSE;
+ELSIF xReverse_D4 THEN
+	iDirection_D4 := 1;
+	xForward_D4 := FALSE;
+END_IF
+
+//Enable Control Word
+IF xEnable_D4 AND NOT xStart_D4 THEN
+	ATV_RPDO_Output1_Control_Word_D4.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D4.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D4.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D4.3 := 0;//Enable Operation
+	ATV_RPDO_Output1_Control_Word_D4.11 := INT_TO_BIT (iDirection_D4);//Direction
+END_IF
+
+//Start Control Word
+IF xEnable_D4 AND xStart_D4 THEN
+	ATV_RPDO_Output1_Control_Word_D4.0 := 1;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D4.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D4.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D4.3 := 1;//Enable Operation
+END_IF
+
+//Stop Control Word
+IF xEnable_D4 AND xStop_D4 THEN
+	xStart_D4 := FALSE;
+	ATV_RPDO_Output1_Control_Word_D4.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D4.1 := 1;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D4.2 := 1;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D4.3 := 0;//Enable Operation
+END_IF
+
+//Reset Control Word
+IF xReset_D4 THEN
+	ATV_RPDO_Output1_Control_Word_D4.7 := 1;//Reset Fault
+ELSE 
+	ATV_RPDO_Output1_Control_Word_D4.7 := 0;//Reset Fault
+END_IF
+
+//Reset if not enabled
+IF NOT xEnable_D4 THEN
+	ATV_RPDO_Output1_Control_Word_D4.0 := 0;//Switch ON
+	ATV_RPDO_Output1_Control_Word_D4.1 := 0;//Enable Voltage
+	ATV_RPDO_Output1_Control_Word_D4.2 := 0;//Quick Stop
+	ATV_RPDO_Output1_Control_Word_D4.3 := 0;//Enable Operation
+	xStart_D4 := FALSE;
+	xStop_D4 := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="FaultCodes" Id="{189e9a65-1491-4f4a-9979-a04ace06bcc8}">
+      <Implementation>
+        <ST><![CDATA[arr_FaultCodes[0]:='No faults';
+arr_FaultCodes[2]:='EEprom control fault';
+arr_FaultCodes[3]:='Incorrect configuration';
+arr_FaultCodes[4]:='Invalid config parameters';
+arr_FaultCodes[5]:='Modbus coms fault';
+arr_FaultCodes[6]:='Com Internal link fault';
+arr_FaultCodes[7]:='Network fault';
+arr_FaultCodes[8]:='External fault logic input';
+arr_FaultCodes[9]:='Overcurrent fault';
+arr_FaultCodes[10]:='Precharge';
+arr_FaultCodes[11]:='Speed feedback loss';
+arr_FaultCodes[12]:='Output speed <> ref';
+arr_FaultCodes[16]:='Drive overheating fault';
+arr_FaultCodes[17]:='Motor overload fault';
+arr_FaultCodes[18]:='DC bus overvoltage fault';
+arr_FaultCodes[19]:='Supply overvoltage fault';
+arr_FaultCodes[20]:='1 motor phase loss fault';
+arr_FaultCodes[21]:='Supply phase loss fault';
+arr_FaultCodes[22]:='Supply undervolt fault';
+arr_FaultCodes[23]:='Motor short circuit';
+arr_FaultCodes[24]:='Motor overspeed fault';
+arr_FaultCodes[25]:='Auto-tuning fault';
+arr_FaultCodes[26]:='Rating error';
+arr_FaultCodes[27]:='Incompatible control card';
+arr_FaultCodes[28]:='Internal coms link fault';
+arr_FaultCodes[29]:='Internal manu zone fault';
+arr_FaultCodes[30]:='EEprom power fault';
+arr_FaultCodes[32]:='Ground short circuit';
+arr_FaultCodes[33]:='3 motor phase loss fault';
+arr_FaultCodes[34]:='Comms fault CANopen';
+arr_FaultCodes[35]:='Brake control fault';
+arr_FaultCodes[38]:='External fault comms';
+arr_FaultCodes[41]:='Brake feedback fault';
+arr_FaultCodes[42]:='PC coms fault';
+arr_FaultCodes[44]:='Torque/current limit fault';
+arr_FaultCodes[45]:='HMI coms fault';
+arr_FaultCodes[49]:='LI6=PTC failed';
+arr_FaultCodes[50]:='LI6=PTC overheat fault';
+arr_FaultCodes[51]:='Internal I measure fault';
+arr_FaultCodes[52]:='Internal i/p volt circuit flt';
+arr_FaultCodes[53]:='Internal temperature fault';
+arr_FaultCodes[54]:='IGBT overheat fault';
+arr_FaultCodes[55]:='IGBT short circuit fault';
+arr_FaultCodes[56]:='Motor short circuit';
+arr_FaultCodes[58]:='Output cont close fault';
+arr_FaultCodes[59]:='Output cont open fault';
+arr_FaultCodes[64]:='input contactor';
+arr_FaultCodes[67]:='IGBT desaturation';
+arr_FaultCodes[68]:='Internal option fault';
+arr_FaultCodes[69]:='Internal- CPU ';
+arr_FaultCodes[71]:='AI3 4-20mA loss';
+arr_FaultCodes[73]:='Cards pairing';
+arr_FaultCodes[76]:='Dynamic load fault';
+arr_FaultCodes[77]:='Interrupted config.';
+arr_FaultCodes[99]:='Channel switching fault';
+arr_FaultCodes[100]:='Process Underlaod Fault';
+arr_FaultCodes[101]:='Process Overload Fault';
+arr_FaultCodes[105]:='Angle error';
+arr_FaultCodes[107]:='Safety fault';
+arr_FaultCodes[108]:='FB fault';
+arr_FaultCodes[109]:='FB stop fault';
+]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="52" Count="2" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="83" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.Deck_1">
+      <LineId Id="4" Count="0" />
+      <LineId Id="73" Count="8" />
+      <LineId Id="14" Count="2" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="86" Count="3" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="19" Count="7" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="28" Count="41" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.Deck_2">
+      <LineId Id="4" Count="0" />
+      <LineId Id="73" Count="8" />
+      <LineId Id="14" Count="2" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="85" Count="5" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="20" Count="6" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="28" Count="41" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.Deck_3">
+      <LineId Id="4" Count="0" />
+      <LineId Id="73" Count="8" />
+      <LineId Id="14" Count="2" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="85" Count="4" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="19" Count="7" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="28" Count="41" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.Deck_4">
+      <LineId Id="4" Count="12" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="76" Count="5" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="19" Count="7" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="28" Count="41" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.FaultCodes">
+      <LineId Id="2" Count="60" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

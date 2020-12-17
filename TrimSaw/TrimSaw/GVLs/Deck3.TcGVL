@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <GVL Name="Deck3" Id="{ed31bfb4-ae5c-4fe0-a944-89b41d38f88d}">
+    <Declaration><![CDATA[VAR_GLOBAL
+	//Deck 1
+	//Drive inputs
+	ATV_State_D3							AT	%I*		: WORD; //Drive state
+	ATV_TPDO_Input1_Status_Word_D3			AT	%I*		: WORD;	//Status Word From Drive
+	iVelocityRaw_D3							AT	%I*		: INT;	//Velocity From Drive - Address 8604 - Units 1 RPM
+	iTorqueRaw_D3							AT	%I*		: INT;	//Torque From Drive - Address 3205 - Units 0.1%
+	uiCurrentRaw_D3							AT	%I*		: UINT;	//Current From Drive - Address 3204 - Units 0.1A
+	uiVoltageRaw_D3							AT	%I*		: UINT;	//Voltage From Drive - Address 3208 - Units 1V
+	uiFaultCode_D3							AT	%I*		: UINT;	//Fault Codes
+	//End drive inputs	
+	
+	//Drive outputs
+	ATV_RPDO_Output1_Control_Word_D3		AT	%Q*		: WORD;	//Control Word To Drive
+	ATV_RPDO_Output2_Target_Velocity_D3		AT	%Q*		: WORD; //Velocity To Drive in RPM - Max Value 32767
+	//End drive outputs
+
+	//Inputs Status Word Bit Level
+	xReady_To_Switch_on_D3 								: BOOL;//Bit 0
+	xSwitched_ON_D3										: BOOL;//Bit 1
+	xOperationEnabled_D3 								: BOOL;//Bit 2
+	xFault_D3 											: BOOL;//Bit 3
+	xVoltageEnabled_D3									: BOOL;//Bit 4
+	xQuickStop_D3										: BOOL;//Bit 5
+	xSwitchOnDisabled_D3 								: BOOL;//Bit 6
+	xWarning_D3											: BOOL;//Bit 7
+	xTargetReached_D3									: BOOL;//Bit 10
+	xInternalLimitActive_D3								: BOOL;//Bit 11
+	xDirectionofRotation_D3								: BOOL;//Bit 15	
+	stFault_D3											: STRING;
+	rTorqueValue_D3										: REAL;
+	rCurrentValue_D3									: REAL;
+	lrSpeed_D3											: LREAL;
+	xEnable_D3											: BOOL; //Enable Drive Trigger
+	xStart_D3											: BOOL;	//Start Trigger
+	xStop_D3 											: BOOL;	//Stop Trigger
+	iDirection_D3										: INT;	//Direction	Trigger
+	xForward_D3											: BOOL; //Forward Trigger
+	xReverse_D3											: BOOL;	//Reverse Trigger
+	xReset_D3											: BOOL;	//Reset Trigger
+	xInputStatus_HMI_D3									: ARRAY [0..9] OF BOOL;	//VFD Status Bits
+	//End inputs Status Word Bit Level
+	//End Deck 1
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

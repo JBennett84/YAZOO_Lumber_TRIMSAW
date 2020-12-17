@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <GVL Name="Inputs" Id="{743e31a6-1b66-46e6-aed2-167f5472702e}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	i_xSawEntryPhotoEye					AT %I*	: BOOL;
+	i_xSawExitPhotoEye					AT %I*	: BOOL;
+	
+	i_iBoardThickness					AT %I*	: ARRAY[0..1] OF INT;	
+	
+	i_xFootSwitch						AT %I*	: BOOL;
+	
+	//DEMO
+	i_xJoyStickButton1					AT %I*	: BOOL;
+	i_xJoyStickButton2					AT %I*	: BOOL;
+	//END DEMO
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
