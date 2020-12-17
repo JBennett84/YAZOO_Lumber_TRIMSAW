@@ -1,0 +1,476 @@
+﻿<div id="Desktop" data-tchmi-type="TcHmi.Controls.System.TcHmiView" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width-mode="Content" data-tchmi-min-width="100" data-tchmi-min-width-unit="%" data-tchmi-height-mode="Content" data-tchmi-min-height="100" data-tchmi-min-height-unit="%" data-tchmi-background-image="Images/Background.png" data-tchmi-background-image-height="100" data-tchmi-background-image-width="100" data-tchmi-background-image-height-unit="%" data-tchmi-background-image-width-unit="%">
+
+<div id="TcHmiImage_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="14.2" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-src="Imports/Images/Yazoo-logo-2017.png" data-tchmi-top-unit="%" data-tchmi-width="10.3" data-tchmi-width-unit="%" data-tchmi-top="0.5" data-tchmi-right-unit="%" data-tchmi-height-mode="Value" data-tchmi-width-mode="Value" data-tchmi-left="0.5">
+
+</div>
+
+<div id="TcHmiRegion" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="79.5" data-tchmi-height-unit="%" data-tchmi-left="1.0" data-tchmi-left-unit="%" data-tchmi-top="14" data-tchmi-top-unit="%" data-tchmi-width="49.5" data-tchmi-width-unit="%" data-tchmi-target-content="Content/Set_Buttons.content">
+
+</div>
+
+<div id="TcHmiTextblock_4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="4" data-tchmi-height-unit="%" data-tchmi-left="51.0" data-tchmi-left-unit="%" data-tchmi-text="%f%'Piece Count : ' +%s%PLC1.HMI.rPieceCount%/s%%/f%" data-tchmi-top="89.5" data-tchmi-top-unit="%" data-tchmi-width="18" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-font-style="Auto" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="200" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-font-size-unit="%" data-tchmi-background-image-horizontal-alignment="Center" data-tchmi-background-image-vertical-alignment="Center" data-tchmi-text-vertical-alignment="Center">
+
+
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "left": 5,
+  "right": 5,
+  "top": 5,
+  "bottom": 5,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 5,
+  "right": 5,
+  "top": 5,
+  "bottom": 5,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
+</div>
+
+<div id="TcHmiRegion_1" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="19" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-top-unit="%" data-tchmi-width="30.0" data-tchmi-width-unit="%" data-tchmi-target-content="Content/Live_Data.content" data-tchmi-bottom-unit="%" data-tchmi-left="69.5" data-tchmi-top="14.0">
+
+</div>
+
+<div id="TcHmiRegion_2" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="75" data-tchmi-height-unit="%" data-tchmi-left="51.0" data-tchmi-left-unit="%" data-tchmi-top="14" data-tchmi-top-unit="%" data-tchmi-width="18.0" data-tchmi-width-unit="%" data-tchmi-target-content="Content/Even_End_Buttons.content">
+
+</div>
+
+<div id="TcHmiRegion_3" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="48.5" data-tchmi-height-unit="%" data-tchmi-left="69.5" data-tchmi-left-unit="%" data-tchmi-top="33.5" data-tchmi-top-unit="%" data-tchmi-width="30" data-tchmi-width-unit="%" data-tchmi-target-content="Content/NextSetList.content">
+
+</div>
+
+<div id="TcHmiButton_13" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="Settings" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-right="12.0" data-tchmi-bottom-unit="%" data-tchmi-right-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="250" data-tchmi-text-font-size-unit="%" data-tchmi-top="83">
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "TcHmiButton_13.onPressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "var v1 = TcHmi.View.get();\nTcHmi.Log.debug(v1.getId());\nTcHmi.View.load('Settings.view', function (data) {\n    var v2 = TcHmi.View.get();\n    TcHmi.Log.debug(v2.getId());\n});"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]</script>
+
+<script data-tchmi-target-attribute="data-tchmi-virtual-control-right-mappings" type="application/json">
+[]
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-access-config" type="application/json">
+[
+  {
+    "accessright": "operate",
+    "group": "Operator",
+    "permission": "Deny"
+  },
+  {
+    "accessright": "observe",
+    "group": "Operator",
+    "permission": "Deny"
+  }
+]
+</script>
+</div>
+
+
+
+<div id="TcHmiButton_25" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="VFD Status" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-right="0.5" data-tchmi-bottom-unit="%" data-tchmi-right-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="250" data-tchmi-text-font-size-unit="%" data-tchmi-top="83">
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "TcHmiButton_25.onPressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "var v1 = TcHmi.View.get();\nTcHmi.Log.debug(v1.getId());\nTcHmi.View.load('VFD_Status.view', function (data) {\n    var v2 = TcHmi.View.get();\n    TcHmi.Log.debug(v2.getId());\n});"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]</script>
+</div>
+
+<div id="TcHmiTextbox_17" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="5" data-tchmi-height-unit="%" data-tchmi-left="1.0" data-tchmi-left-unit="%" data-tchmi-text="%f%'Status : ' +%s%PLC1.HMI.stStatusMessage_HMI%/s%%/f%" data-tchmi-top-unit="%" data-tchmi-width="84.0" data-tchmi-width-unit="%" data-tchmi-bottom="0.5" data-tchmi-bottom-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="200" data-tchmi-text-font-size-unit="%">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+</div>
+
+<div id="TcHmiButton_29" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="5" data-tchmi-height-unit="%" data-tchmi-left-unit="px" data-tchmi-text="" data-tchmi-top-unit="px" data-tchmi-width="13" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-background-image="Images/Logo Wide.jpg" data-tchmi-background-image-width-unit="%" data-tchmi-background-image-width="100" data-tchmi-background-image-height-unit="%" data-tchmi-background-image-height="100" data-tchmi-right-unit="%" data-tchmi-bottom-unit="%" data-tchmi-bottom="0.5" data-tchmi-right="0.5">
+
+</div>
+
+<div id="TcHmiButton_30" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="%s%PLC1.HMI.stStartStopButton%/s%" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-bottom-unit="%" data-tchmi-right-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="250" data-tchmi-text-font-size-unit="%" data-tchmi-top="2" data-tchmi-left="15">
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-background-color" type="application/json">
+{
+  "color": "rgba(60, 239, 16, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "%s%PLC1.HMI.xStartStopButton%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "asyncWait": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "symbolExpression": "%s%PLC1.HMI.xStartStopButton%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": false
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%TcHmiButton_30::BackgroundColor%/ctrl%",
+                "valueType": "tchmi:framework#/definitions/Color",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(0, 255, 0, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%TcHmiButton_30::BackgroundColor%/ctrl%",
+                "valueType": "tchmi:framework#/definitions/Color",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(255, 0, 0, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "event": "TcHmiButton_30.onPressed",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "asyncWait": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "symbolExpression": "%s%PLC1.HMI.xStartStopButton%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%s%PLC1.HMI.xStartStopButton%/s%",
+                "valueType": "tchmi:general#/definitions/BOOL",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": false
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%s%PLC1.HMI.xStartStopButton%/s%",
+                "valueType": "tchmi:general#/definitions/BOOL",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]</script>
+</div>
+
+<div id="TcHmiButton_31" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="%s%PLC1.HMI.stSlowFastButton%/s%" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-bottom-unit="%" data-tchmi-right-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="250" data-tchmi-text-font-size-unit="%" data-tchmi-top="2" data-tchmi-left="37">
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "TcHmiButton_31.onPressed",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "asyncWait": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "symbolExpression": "%s%PLC1.HMI.xSlowFastButton%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%s%PLC1.HMI.xSlowFastButton%/s%",
+                "valueType": "tchmi:general#/definitions/BOOL",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": false
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%s%PLC1.HMI.xSlowFastButton%/s%",
+                "valueType": "tchmi:general#/definitions/BOOL",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]</script>
+</div>
+
+<div id="TcHmiButton_32" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-bottom-unit="%" data-tchmi-right-unit="%" data-tchmi-text-font-weight="Bold" data-tchmi-text-font-size="250" data-tchmi-text-font-size-unit="%" data-tchmi-top="2" data-tchmi-left="26" data-tchmi-text="Reset" data-tchmi-state-symbol="%s%PLC1.HMI.xResetButton%/s%">
+
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+
+</div>
+
+<div id="TcHmiButton_23" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="Login Page" data-tchmi-top="2" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-font-size-unit="%" data-tchmi-left="78.0" data-tchmi-text-font-size="250" data-tchmi-text-font-weight="Bold">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "TcHmiButton_23.onPressed",
+    "actions": [
+      {
+        "objectType": "Function",
+        "active": true,
+        "fn": "GoToLoginPage",
+        "fnParams": [],
+        "asyncWait": true
+      }
+    ]
+  }
+]</script>
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+</div>
+
+<div id="TcHmiButton_249" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="Logout" data-tchmi-top="2" data-tchmi-top-unit="%" data-tchmi-width="10" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-font-size-unit="%" data-tchmi-left="89.0" data-tchmi-text-font-size="250" data-tchmi-text-font-weight="Bold">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "TcHmiButton_249.onPressed",
+    "actions": [
+      {
+        "objectType": "Function",
+        "active": true,
+        "fn": "Logout",
+        "fnParams": [],
+        "asyncWait": true
+      }
+    ]
+  }
+]</script>
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+</div>
+
+<div id="TcHmiTextblock_55" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="10" data-tchmi-height-unit="%" data-tchmi-left-unit="%" data-tchmi-text="%f%%s%GetCurrentUser::name%/s%+' is logged on'%/f%" data-tchmi-top="2.0" data-tchmi-top-unit="%" data-tchmi-width="28" data-tchmi-width-unit="%" data-tchmi-word-wrap="True" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-text-font-size="250" data-tchmi-text-font-weight="Normal" data-tchmi-text-font-size-unit="%" data-tchmi-left="49">
+
+
+<script data-tchmi-target-attribute="data-tchmi-background-color" type="application/json">
+{
+  "color": "rgba(255, 250, 255, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+</div>
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">[
+  {
+    "event": "Desktop.onAttached",
+    "actions": [
+      {
+        "objectType": "Function",
+        "active": true,
+        "fn": "ActivateRecipe",
+        "fnParams": [
+          {
+            "objectType": "Symbol",
+            "symbolExpression": "%s%PLC1.MAIN.stRecipeName%/s%"
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]</script>
+</div>

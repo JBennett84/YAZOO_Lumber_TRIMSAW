@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "User Controls_Outputs": {
+      "frameworkControlNamespace": "TcHmi.Controls.Beckhoff",
+      "frameworkControlType": "tchmi-user-control-host",
+      "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
+      "frameworkUserControlConfig": "User Controls\\Outputs.usercontrol.json",
+      "type": "object",
+      "id": "tchmi:project#/definitions/User Controls_Outputs"
+    },
+    "User Controls_VFD_Indicators": {
+      "frameworkControlNamespace": "TcHmi.Controls.Beckhoff",
+      "frameworkControlType": "tchmi-user-control-host",
+      "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
+      "frameworkUserControlConfig": "User Controls\\VFD_Indicators.usercontrol.json",
+      "type": "object",
+      "id": "tchmi:project#/definitions/User Controls_VFD_Indicators"
+    }
+  }
+}

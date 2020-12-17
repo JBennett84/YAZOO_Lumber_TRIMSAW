@@ -4293,14 +4293,16 @@
     "USERSELECTTYPE": 0,
     "VIDEOSEGMENTSIZE": 1048576,
     "VIRTUALDIRECTORIES": {
-        "/": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\TrimSaw_HMI",
-        "/Beckhoff.TwinCAT.HMI.Controls": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.742.5\\runtimes\\native1.12-tchmi",
-        "/Beckhoff.TwinCAT.HMI.EventLogger": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.EventLogger.12.742.5",
-        "/Beckhoff.TwinCAT.HMI.Functions": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.742.5\\runtimes\\native1.12-tchmi",
-        "/Beckhoff.TwinCAT.HMI.RecipeManagement": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.RecipeManagement.12.742.5",
-        "/Beckhoff.TwinCAT.HMI.SqliteHistorize": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.SqliteHistorize.12.742.5",
+        "/": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW",
+        "/Beckhoff.TwinCAT.HMI.Controls": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.742.5\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.EventLogger": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.EventLogger.12.742.5",
+        "/Beckhoff.TwinCAT.HMI.Functions": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.742.5\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.RecipeManagement": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.RecipeManagement.12.742.5",
+        "/Beckhoff.TwinCAT.HMI.SqliteHistorize": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.SqliteHistorize.12.742.5",
+        "/TrimSaw/../bin": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\..\\bin\\",
+        "/TrimSaw/../bin/framework": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\..\\bin\\framework",
         "/bin": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\TrimSaw_HMI\\bin\\",
-        "/bin/framework": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\TrimSaw_HMI\\bin\\framework",
-        "/framework": "C:\\Users\\IAI Systems\\Desktop\\Projects\\Yazoo Lumber and Mats\\TrimSaw\\TrimSaw\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.742.5\\runtimes\\native1.12-tchmi"
+        "/bin/framework": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\bin\\framework",
+        "/framework": "C:\\Users\\IAI Systems\\Documents\\YAZOO_Lumber_TRIMSAW\\TrimSaw\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.742.5\\runtimes\\native1.12-tchmi"
     }
 }
